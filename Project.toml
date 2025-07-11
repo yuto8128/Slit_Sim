@@ -2,3 +2,9 @@ name = "Slit_Sim"
 uuid = "b7c19d57-97a0-441c-9821-e4a5bb8b2775"
 authors = ["euclid8128 <y.kato.534@ms.saitama-u.ac.jp>"]
 version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[compat]
+LinearAlgebra = "1.11.0"
