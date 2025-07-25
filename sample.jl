@@ -2,40 +2,47 @@ using Plots
 
 
 ## 定数
-h = 1.0
-m = 1.0
-k = 1.0
-L = 15
-N = 400
-dx = 2*L / N
+h = 1.0 ##プランク定数
+m = 1.0 ##電子の質量
+L = 15 ##一辺の長さ/2
+N = 400 ##格子分割数
+dx = 2*L / N ##格子幅
 
 
 
-t_ini = 0.0
-t_fin = 0.1
-step_t = 10000
-dt = (t_fin - t_ini)/step_t
+t_ini = 0.0 ##開始時間
+t_fin = 1.0 ##終了時間
+step_t = 100000 ##時間分割数
+dt = (t_fin - t_ini)/step_t ##時間幅
 
 
 hall_size = 0.20    ##穴の半径
-hall_pos  = 1.0    ##穴の位置
+hall_pos  = 1.0    ##2つの穴の中央から穴の中心までの距離
 hall_params = [hall_size, hall_pos]
+
 function potential( i, j, L, dx, params )
-  hall_size , hall_pos = params
+  thickness = 0.2 ##厚さ
+  potential_height = 1e3 ##ポテンシャルVの大きさ
+  ##注意：この手法の場合、ポテンシャルが系のパラメーターに対して大きすぎるとうまくいかないことがあります。
+  hall_number = 3 ##穴の数
+  hall_size, hall_pos = params
   x = -L + dx*(i-1)
   y = -L + dx*(j-1)
-  if ( -0.2 < y < 0.2 )
-    if (-L < x < -hall_pos-hall_size)
-      return 1e3
-      # return 0
-    elseif (-hall_pos+hall_size < x < hall_pos-hall_size)
-      return 1e3
-      # return 0
-    elseif (hall_pos+hall_size< x < L)
-      return 1e3
-      # return 0
+
+  if ( -thickness < y < thickness )
+    if (L<(hall_number-1-2*(i-1))*hall_pos+hall_size)
+      println("error. hall is out of box.")
+      return "error"
+    elseif (typeof(hall_number)==Int64)
+      for i = 1:hall_number
+        if ((hall_number-1-2*(i-1))*hall_pos-hall_size < x < (hall_number-1-2*(i-1))*hall_pos+hall_size)
+            return 0.0
+        end
+      end
+      return potential_height
     else
-      return 0.0
+      println("error. hall_number must be integer")
+      return "error"
     end
   else
     return 0.0
@@ -83,7 +90,6 @@ function main()
   y = range(-L, L, length=N+1)
   wave0 = initial_condition(N, dx, L)
   wave_pre = copy(wave0)
-
   for i in 1:80000
     wave_next = timeprop( N, wave_pre, dt, dx )
     if i % 500 == 0
