@@ -58,7 +58,7 @@ function initial_condition( N, dx, L )
       x = -L + dx*(i-1)
       y = -L + dx*(j-1)
       if ( x^2 + (y+L/2)^2 < 49)
-        wave[j,i] = exp(-((x)^2 + (y + L/2)^2)/2)*exp(im * 10 * y)
+        wave[j,i] = 2.0*exp(-((x)^2 + (y + L/2)^2)/2)*exp(im * 10 * y)
       end
     end
   end
@@ -93,15 +93,15 @@ function main()
   for i in 1:80000
     wave_next = timeprop( N, wave_pre, dt, dx )
     if i % 500 == 0
-      p = heatmap(x, y, real.(wave_next), clims = (-1, 1), aspect_ratio=:equal, title="t = $(round(i*dt, digits=3))")
-      # p = heatmap(x, y, abs.(wave_next),clims = (0, 2), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
+      # p = heatmap(x, y, real.(wave_next), clims = (-1, 1), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
+      p = heatmap(x, y, abs.(wave_next),clims = (0, 2), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
       frame(anim,p)
       println(i)
     end
     wave_pre = copy(wave_next)
   end
 
-  gif(anim, "sample_real.gif", fps=10)
+  gif(anim, "sample_abs_gray.gif", fps=10)
 
 end 
 
