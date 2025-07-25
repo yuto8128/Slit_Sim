@@ -1,8 +1,7 @@
 module Slit_Sim
 
 import LinearAlgebra
-
-
+import DifferentialEquations
 
 greet() = print("Hello World!")
 
