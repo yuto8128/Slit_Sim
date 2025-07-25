@@ -74,11 +74,9 @@ V(x,y) = \left\lbrace
 \frac{\ \partial^2\psi\ }{\ \partial x^2\ } +  \frac{\ \partial^2\psi\ }{\ \partial y^2\ } \approx \frac{\ \psi_{i+1,j}(t) + \psi_{i,j+1}(t) + \psi_{i-1,j}(t) + \psi_{i,j-1}(t) - 4\psi_{i,j}(t) \ }{\ \Delta x^2 \ }
 ```
 となり，空間格子点(i,j)の時間発展について
-$$
-  \begin{align}
-    \psi_{i,j}(t+\Delta t) = \psi_{i,j}(t) + i\left(\frac{\ \psi_{i+1,j}(t) + \psi_{i,j+1}(t) + \psi_{i-1,j}(t) + \psi_{i,j-1}(t) - 4\psi_{i,j}(t) \ }{\ \Delta x^2 \ } + V_{i,j}   \right)\Delta t
-  \end{align}
-$$
+```math
+\psi_{i,j}(t+\Delta t) = \psi_{i,j}(t) + i\left(\frac{\ \psi_{i+1,j}(t) + \psi_{i,j+1}(t) + \psi_{i-1,j}(t) + \psi_{i,j-1}(t) - 4\psi_{i,j}(t) \ }{\ \Delta x^2 \ } + V_{i,j}   \right)\Delta t
+```
 が成り立つ。
 
 ## 初期条件
