@@ -103,7 +103,6 @@ $$ -->
 
 その他のパッケージのバージョンは pyproject.toml と package.json を参照してください
 
-<p align="right">(<a href="#top">トップへ</a>)</p>
 
 ## ディレクトリ構成
 
