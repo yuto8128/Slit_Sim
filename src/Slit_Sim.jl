@@ -1,32 +1,69 @@
 module Slit_Sim
 
 
-function potential( i, j, L, dx, params )
-  thickness = 0.2 ##厚さ
-  potential_height = 1e3 ##ポテンシャルVの大きさ
-  ##注意：この手法の場合、ポテンシャルが系のパラメーターに対して大きすぎるとうまくいかないことがあります。
-  hall_size, hall_pos, hall_number  = params
-  x = -L + dx*(i-1)
-  y = -L + dx*(j-1)
+# function potential( i, j, L, dx, params )
+#   thickness = 0.2 ##厚さ
+#   potential_height = 1e3 ##ポテンシャルVの大きさ
+#   ##注意：この手法の場合、ポテンシャルが系のパラメーターに対して大きすぎるとうまくいかないことがあります。
+#   hall_size, hall_pos, hall_number  = params
+#   x = -L + dx*(i-1)
+#   y = -L + dx*(j-1)
 
-  if ( -thickness < y < thickness )
-    if (L<(hall_number-1-2*(i-1))*hall_pos+hall_size)
-      println("error. hall is out of box.")
-      return "error"
-    elseif (typeof(hall_number)==Int64)
-      for i = 1:hall_number
-        if ((hall_number-1-2*(i-1))*hall_pos-hall_size < x < (hall_number-1-2*(i-1))*hall_pos+hall_size)
-            return 0.0
-        end
-      end
-      return potential_height
-    else
-      println("error. hall_number must be integer")
-      return "error"
+#   if ( -thickness < y < thickness )
+#     if (L<(hall_number-1-2*(i-1))*hall_pos+hall_size)
+#       println("error. hall is out of box.")
+#       return "error"
+#     elseif (typeof(hall_number)==Int64)
+#       for i = 1:hall_number
+#         if ((hall_number-1-2*(i-1))*hall_pos-hall_size < x < (hall_number-1-2*(i-1))*hall_pos+hall_size)
+#             return 0.0
+#         end
+#       end
+#       return potential_height
+#     else
+#       println("error. hall_number must be integer")
+#       return "error"
+#     end
+#   else
+#     return 0.0
+#   end
+# end
+
+function potential(i, j, L, dx, params)
+    thickness = 0.2
+    potential_height = 1e3
+    hall_size = params.hall_size
+    hall_pos = params.hall_pos
+    hall_number = params.hall_number
+
+    # 型チェック
+    if !isa(hall_number, Integer)
+        error("hall_number must be an integer, but got: $(typeof(hall_number))")
     end
-  else
-    return 0.0
-  end
+
+    x = -L + dx*(i-1)
+    y = -L + dx*(j-1)
+
+    if (-thickness < y < thickness)
+        # 穴の配置がボックスをはみ出す場合のチェック
+        max_extent = (hall_number - 1) * hall_pos + hall_size
+        if L < max_extent
+            println("Warning: hole extends beyond simulation box.")
+            return potential_height
+        end
+
+        # 各スリットの位置にポテンシャルをゼロにする
+        for n = 1:hall_number
+            cx = (hall_number - 1 - 2*(n-1)) * hall_pos
+            if (cx - hall_size < x < cx + hall_size)
+                return 0.0
+            end
+        end
+
+        return potential_height
+    else
+        return 0.0
+    end
 end
 
 
