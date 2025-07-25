@@ -29,6 +29,20 @@ module Slit_Sim
 #   end
 # end
 
+#整数判別器
+function read_integer()
+    while true
+        print("整数を入力してください：")
+        input = readline()
+        try
+            num = parse(Int, input)
+            return num
+        catch
+            println("無効な入力です。もう一度入力してください。")
+        end
+    end
+end
+
 function potential(i, j, L, dx, params)
     thickness = 0.2
     potential_height = 1e3
