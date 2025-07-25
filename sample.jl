@@ -95,22 +95,26 @@ function next_wave( N, wave_pre, dt, dx )
   return wave_next
 end
 
+function main()
+  anim = Animation()
+  x = range(-L, L, length=N+1)
+  y = range(-L, L, length=N+1)
+  wave0 = initial_condition(N, dx, L)
+  wave_pre = copy(wave0)
 
-anim = Animation()
-x = range(-L, L, length=N+1)
-y = range(-L, L, length=N+1)
-wave0 = initial_condition(N, dx, L)
-wave_pre = copy(wave0)
-
-for i in 1:80000
-  wave_next = next_wave( N, wave_pre, dt, dx )
-  if i % 500 == 0
-    p = heatmap(x, y, real.(wave_next), clims = (-1, 1), aspect_ratio=:equal, title="t = $(round(i*dt, digits=3))")
-    # p = heatmap(x, y, abs.(wave_next),clims = (0, 2), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
-    frame(anim,p)
-    println(i)
+  for i in 1:80000
+    wave_next = next_wave( N, wave_pre, dt, dx )
+    if i % 500 == 0
+      p = heatmap(x, y, real.(wave_next), clims = (-1, 1), aspect_ratio=:equal, title="t = $(round(i*dt, digits=3))")
+      # p = heatmap(x, y, abs.(wave_next),clims = (0, 2), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
+      frame(anim,p)
+      println(i)
+    end
+    wave_pre = copy(wave_next)
   end
-  wave_pre = copy(wave_next)
-end
 
-gif(anim, "sample_real.gif", fps=10)
+  gif(anim, "sample_real.gif", fps=10)
+
+end 
+
+main()
