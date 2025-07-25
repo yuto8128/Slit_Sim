@@ -48,7 +48,7 @@ React、DRF、Terraform のテンプレートリポジトリ
 ## 問題設定
 シュレディンガー方程式は$` \hbar=1, 1/2m = 1 `$として
 ```math
-\frac{\ \partial \psi\ }{\ \partial t\ } = i\left(\frac{\ \partial^2\psi\ }{\ \partial x^2\ } + \frac{\ \partial^2\psi\ }{\ \partial y^2\ } + V(x,y)\psi  \right)
+\frac{\ \partial \psi\ }{\ \partial t\ } = i\left(\frac{\ \partial^2\psi\ }{\ \partial x^2\ } + \frac{\ \partial^2\psi\ }{\ \partial y^2\ } + V\psi  \right)
 ```
 ポテンシャルは
 ```math
@@ -74,12 +74,13 @@ V(x,y) = \left\lbrace
 \frac{\ \partial^2\psi\ }{\ \partial x^2\ } +  \frac{\ \partial^2\psi\ }{\ \partial y^2\ } \approx \frac{\ \psi_{i+1,j}(t) + \psi_{i,j+1}(t) + \psi_{i-1,j}(t) + \psi_{i,j-1}(t) - 4\psi_{i,j}(t) \ }{\ \Delta x^2 \ }
 ```
 となり，空間格子点(i,j)の時間発展について
-## 怒られた
+```
 $$
   \begin{align}
     \psi_{i,j}(t+\Delta t) = \psi_{i,j}(t) + i\left(\frac{\ \psi_{i+1,j}(t) + \psi_{i,j+1}(t) + \psi_{i-1,j}(t) + \psi_{i,j-1}(t) - 4\psi_{i,j}(t) \ }{\ \Delta x^2 \ } + V_{i,j}   \right)\Delta t
   \end{align}
 $$
+が成り立つ。
 
 ## 初期条件
 $$
