@@ -65,41 +65,23 @@ function initial_condition( N, dx, L )
   return wave
 end
 
-function next_wave( N, wave_pre, dt, dx )
-  wave_next = zeros(ComplexF64, N+1, N+1)
-
-  for i in 1:N+1
-    for j in 1:N+1
-      if ( i==1 )
-        if ( j==1 )
-          wave_next[j,i] = wave_pre[j,i] + im*(wave_pre[j,i+1] + wave_pre[j+1,i]                                     - 4.0*wave_pre[j,i])*dt/dx^2
-        elseif ( j==N+1 )
-          wave_next[j,i] = wave_pre[j,i] + im*(wave_pre[j,i+1]                                     + wave_pre[j-1,i] - 4.0*wave_pre[j,i])*dt/dx^2
-        else
-          wave_next[j,i] = wave_pre[j,i] + im*(wave_pre[j,i+1] + wave_pre[j+1,i] +                 + wave_pre[j-1,i] - 4.0*wave_pre[j,i])*dt/dx^2 
+function timeprop(N,wave_pre,dt,dx)
+     wave_next = zeros(ComplexF64, N+1, N+1)
+    wave_pre_save = zeros(ComplexF64,N+3,N+3)  # waveのコピーを保存するための配列:行列を1周り大きくして、i-1,i+1のエラーに備える。
+    # 時間発展の計算
+    for i in 1:N+1
+        for j in 1:N+1
+            wave_pre_save[j+1, i+1] = wave_pre[j, i] 
         end
-      elseif ( i==N+1 )
-        if ( j==1 )
-          wave_next[j,i] = wave_pre[j,i] + im*(                  wave_pre[j+1,i] + wave_pre[j,i-1] +                 - 4.0*wave_pre[j,i])*dt/dx^2
-        elseif ( j==N+1 )
-          wave_next[j,i] = wave_pre[j,i] + im*(                                  + wave_pre[j,i-1] + wave_pre[j-1,i] - 4.0*wave_pre[j,i])*dt/dx^2
-        else
-          wave_next[j,i] = wave_pre[j,i] + im*(                  wave_pre[j+1,i] + wave_pre[j,i-1] + wave_pre[j-1,i] - 4.0*wave_pre[j,i])*dt/dx^2
-        end
-      else
-        if ( j==1 )
-          wave_next[j,i] = wave_pre[j,i] + im*(wave_pre[j,i+1] + wave_pre[j+1,i] + wave_pre[j,i-1] +                 - 4.0*wave_pre[j,i])*dt/dx^2
-        elseif ( j==N+1 )
-          wave_next[j,i] = wave_pre[j,i] + im*(wave_pre[j,i+1]                   + wave_pre[j,i-1] + wave_pre[j-1,i] - 4.0*wave_pre[j,i])*dt/dx^2
-        else
-          wave_next[j,i] = wave_pre[j,i] + im*(wave_pre[j,i+1] + wave_pre[j+1,i] + wave_pre[j,i-1] + wave_pre[j-1,i] - 4.0*wave_pre[j,i])*dt/dx^2
-        end
-      end
-      wave_next[j,i] += -im * potential( i, j, L, dx, hall_params ) * wave_pre[j,i] * dt
     end
-  end
-  
-  return wave_next
+    for i in 2:N+2
+        for j in 2:N+2
+            wave_next[j-1, i-1] = im*(wave_pre_save[j-1, i] + wave_pre_save[j+1, i] + wave_pre_save[j, i-1] + wave_pre_save[j, i+1] -4 * wave_pre_save[j, i])/dx^2 * dt + wave_pre_save[j, i]
+            wave_next[j-1, i-1] += -im * potential( i-1, j-1, L, dx, hall_params ) * wave_pre_save[j,i] * dt
+        end
+    end
+
+    return wave_next
 end
 
 function main()
@@ -108,9 +90,8 @@ function main()
   y = range(-L, L, length=N+1)
   wave0 = initial_condition(N, dx, L)
   wave_pre = copy(wave0)
-
-  for i in 1:50000
-    wave_next = next_wave( N, wave_pre, dt, dx )
+  for i in 1:80000
+    wave_next = timeprop( N, wave_pre, dt, dx )
     if i % 500 == 0
       p = heatmap(x, y, real.(wave_next), clims = (-1, 1), aspect_ratio=:equal, title="t = $(round(i*dt, digits=3))")
       # p = heatmap(x, y, abs.(wave_next),clims = (0, 2), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
