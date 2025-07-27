@@ -1,5 +1,4 @@
 import Slit_Sim
-
 using Plots
 
 
@@ -23,9 +22,13 @@ struct SlitConfig
     hall_number::Int
 end
 
-hall_size = 0.20    ##穴の半径
-hall_pos  = 1.0    ##2つの穴の中央から穴の中心までの距離
-hall_number = 3
+# hall_size = 0.20    ##穴の半径
+# hall_pos  = 1.0    ##2つの穴の中央から穴の中心までの距離
+# hall_number = 3
+
+hall_size   = Slit_Sim.read_value(1)    ##穴の半径
+hall_pos    = Slit_Sim.read_value(2)    ##2つの穴の中央から穴の中心までの距離
+hall_number = Slit_Sim.read_value(3)
 hall_params = SlitConfig(hall_size, hall_pos, hall_number)
 
 function main()

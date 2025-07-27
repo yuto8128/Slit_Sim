@@ -30,18 +30,39 @@ module Slit_Sim
 # end
 
 #整数判別器
-function read_integer()
-    while true
-        print("整数を入力してください：")
-        input = readline()
-        try
-            num = parse(Int, input)
-            return num
-        catch
-            println("無効な入力です。もう一度入力してください。")
-        end
+function read_value(type)
+  while true
+    if type == 1
+      print("double型のスリットの半径を入力してください：")
+      input = readline()
+      try
+        num = parse(Float64, input)
+        return num
+      catch
+        println("無効な入力です。もう一度入力してください。")
+      end
+    elseif type == 2
+      print("double型のスリット間の距離を入力してください：")
+      input = readline()
+      try
+        num = parse(Float64, input)
+        return num
+      catch
+        println("無効な入力です。もう一度入力してください。")
+      end
+    else
+      print("Int型のスリット数を入力してください：")
+      input = readline()
+      try
+        num = parse(Int64, input)
+        return num
+      catch
+        println("無効な入力です。もう一度入力してください。")
+      end
     end
+  end
 end
+
 
 function potential(i, j, L, dx, params)
     thickness = 0.2
