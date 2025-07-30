@@ -27,7 +27,7 @@ end
 # hall_number = 3
 
 hall_size   = Slit_Sim.read_value(1)    ##穴の半径
-hall_pos    = Slit_Sim.read_value(2)    ##2つの穴の中央から穴の中心までの距離
+hall_pos    = Slit_Sim.read_value(2)/2.0    ##2つの穴の中央から穴の中心までの距離
 hall_number = Slit_Sim.read_value(3)
 hall_params = SlitConfig(hall_size, hall_pos, hall_number)
 
@@ -48,7 +48,7 @@ function main()
     wave_pre = copy(wave_next)
   end
 
-  gif(anim, "sample_main.gif", fps=10)
+  gif(anim, "sample.gif", fps=10)
 end
 
 main()
