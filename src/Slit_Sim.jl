@@ -29,7 +29,7 @@ module Slit_Sim
 #   end
 # end
 
-#整数判別器
+#入力値の型判別器__正しい入力が行われるまで繰り返す
 function read_value(type)
   while true
     if type == 1
@@ -64,7 +64,7 @@ function read_value(type)
 end
 
 
-function potential(i, j, L, dx, params)
+function potential(i, j, L, dx, params) ##ポテンシャル関数__ポテンシャル大でスリットを再現
     thickness = 0.2
     potential_height = 1e3
     hall_size = params.hall_size
@@ -103,7 +103,7 @@ end
 
 
 
-function initial_condition( N, dx, L )
+function initial_condition( N, dx, L )  ##初期の波動関数__同心円状の広がりを持つ
   wave = zeros(ComplexF64, N+1, N+1)
   for i in 1:N+1
     for j in 1:N+1
@@ -118,7 +118,7 @@ function initial_condition( N, dx, L )
 end
 
 
-function timeprop( N, wave_pre, dt, dx, L, params)
+function timeprop( N, wave_pre, dt, dx, L, params) ##波動関数の時間発展__差分法
     wave_next = zeros(ComplexF64, N+1, N+1)
     wave_pre_save = zeros(ComplexF64,N+3,N+3)  # waveのコピーを保存するための配列:行列を1周り大きくして、i-1,i+1のエラーに備える。
     # 時間発展の計算

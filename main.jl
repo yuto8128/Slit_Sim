@@ -24,7 +24,7 @@ end
 
 # hall_size = 0.20    ##穴の半径
 # hall_pos  = 1.0    ##2つの穴の中央から穴の中心までの距離
-# hall_number = 3
+# hall_number = 3     ##穴の数
 
 hall_size   = Slit_Sim.read_value(1)    ##穴の半径
 hall_pos    = Slit_Sim.read_value(2)/2.0    ##2つの穴の中央から穴の中心までの距離
@@ -39,9 +39,9 @@ function main()
   wave_pre = copy(wave0)
   for i in 1:80000
     wave_next = Slit_Sim.timeprop( N, wave_pre, dt, dx ,L, hall_params)
-    if i % 500 == 0
-      # p = heatmap(x, y, real.(wave_next), clims = (-1, 1), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
-      p = heatmap(x, y, abs.(wave_next),clims = (0, 2), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")
+    if i % 500 == 0  ##アニメーションのフレームを500ステップごとに保存し、gifを作成
+      # p = heatmap(x, y, real.(wave_next), clims = (-1, 1), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))") ##波動関数の実部
+      p = heatmap(x, y, abs.(wave_next),clims = (0, 2), aspect_ratio=:equal, color=:grays, title="t = $(round(i*dt, digits=3))")  ## 波動関数の絶対値
       frame(anim,p)
       println(i)
     end
