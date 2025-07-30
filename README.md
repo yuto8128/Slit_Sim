@@ -36,7 +36,7 @@ React、DRF、Terraform のテンプレートリポジトリ
 ## 問題設定
 シュレディンガー方程式は$` \hbar=1, 1/2m = 1 `$として
 ```math
-\frac{\ \partial \psi\ }{\ \partial t\ } = i\left(\frac{\ \partial^2\psi\ }{\ \partial x^2\ } + \frac{\ \partial^2\psi\ }{\ \partial y^2\ } + V\psi  \right)
+\frac{\ \partial \psi\ }{\ \partial t\ } = i\left(\frac{\ \partial^2\psi\ }{\ \partial x^2\ } + \frac{\ \partial^2\psi\ }{\ \partial y^2\ } - V\psi  \right)
 ```
 ポテンシャルは
 ```math
