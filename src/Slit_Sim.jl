@@ -1,34 +1,5 @@
 module Slit_Sim
 
-
-# function potential( i, j, L, dx, params )
-#   thickness = 0.2 ##厚さ
-#   potential_height = 1e3 ##ポテンシャルVの大きさ
-#   ##注意：この手法の場合、ポテンシャルが系のパラメーターに対して大きすぎるとうまくいかないことがあります。
-#   hall_size, hall_pos, hall_number  = params
-#   x = -L + dx*(i-1)
-#   y = -L + dx*(j-1)
-
-#   if ( -thickness < y < thickness )
-#     if (L<(hall_number-1-2*(i-1))*hall_pos+hall_size)
-#       println("error. hall is out of box.")
-#       return "error"
-#     elseif (typeof(hall_number)==Int64)
-#       for i = 1:hall_number
-#         if ((hall_number-1-2*(i-1))*hall_pos-hall_size < x < (hall_number-1-2*(i-1))*hall_pos+hall_size)
-#             return 0.0
-#         end
-#       end
-#       return potential_height
-#     else
-#       println("error. hall_number must be integer")
-#       return "error"
-#     end
-#   else
-#     return 0.0
-#   end
-# end
-
 #入力値の型判別器__正しい入力が行われるまで繰り返す
 function read_value(type)
   while true
