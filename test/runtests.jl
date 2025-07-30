@@ -18,7 +18,11 @@ using Slit_Sim: potential
         hall_params = SlitConfig(hall_size, hall_pos, hall_number)
         
 
-        @test potential(1,1,L,dx, hall_params) == 0.0
+        @test potential(1  ,200,L,dx,hall_params) == 1e3   ## ポテンシャルの左端
+        @test potential(173,200,L,dx,hall_params) == 0.0   ## ポテンシャルの左穴の中心
+        @test potential(200,200,L,dx,hall_params) == 1e3   ## ポテンシャルの中心
+        @test potential(226,200,L,dx,hall_params) == 0.0   ## ポテンシャルの右穴の中心
+        @test potential(400,200,L,dx,hall_params) == 1e3   ## ポテンシャルの右端
     end
 
     @testset "potential2" begin
