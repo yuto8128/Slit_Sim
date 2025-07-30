@@ -11,7 +11,7 @@ using Slit_Sim: potential
     N = 400 ##格子分割数
     dx = 2*L / N ##格子幅
 
-    @testset "potential1" begin
+    @testset "potential_2slits" begin
         hall_size = 0.20    ##穴の半径
         hall_pos  = 2.0    ##2つの穴の中央から穴の中心までの距離
         hall_number = 2
@@ -25,17 +25,23 @@ using Slit_Sim: potential
         @test potential(400,200,L,dx,hall_params) == 1e3   ## ポテンシャルの右端
     end
 
-    @testset "potential2" begin
+    @testset "potential_3slits" begin
         hall_size = 0.20    ##穴の半径
         hall_pos  = 1.0    ##2つの穴の中央から穴の中心までの距離
         hall_number = 3
         hall_params = SlitConfig(hall_size, hall_pos, hall_number)
         
 
-        @test potential(1,1,L,dx, hall_params) == 0.0
+        @test potential(1  ,200,L,dx,hall_params) == 1e3   ## ポテンシャルの左端
+        @test potential(173,200,L,dx,hall_params) == 0.0   ## ポテンシャルの左穴の中心
+        @test potential(186,200,L,dx,hall_params) == 1e3   ## 
+        @test potential(200,200,L,dx,hall_params) == 0.0   ## ポテンシャルの中心
+        @test potential(213,200,L,dx,hall_params) == 1e3   ## ポテンシャルの中心
+        @test potential(226,200,L,dx,hall_params) == 0.0   ## ポテンシャルの右穴の中心
+        @test potential(400,200,L,dx,hall_params) == 1e3   ## ポテンシャルの右端
     end
 
-    @testset "potential3" begin
+    @testset "potential3" begin   ## これいる？
         hall_size = 0.20    ##穴の半径
         hall_pos  = 1.0    ##2つの穴の中央から穴の中心までの距離
         hall_number = 3
