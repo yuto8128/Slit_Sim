@@ -88,6 +88,8 @@ $$
 - スリット間距離：hall_pos = 2.0
 - スリット数：hall_number = 2
 
+- ![Image](https://github.com/user-attachments/assets/c113d0ef-25a1-45b7-96cf-902139298da7)
+
 
 
 
