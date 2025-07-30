@@ -63,7 +63,7 @@ V(x,y) = \left\lbrace
 ```
 となり，空間格子点(i,j)の時間発展について
 ```math
-\psi_{i,j}(t+\Delta t) = \psi_{i,j}(t) + i\left(\frac{\ \psi_{i+1,j}(t) + \psi_{i,j+1}(t) + \psi_{i-1,j}(t) + \psi_{i,j-1}(t) - 4\psi_{i,j}(t) \ }{\ \Delta x^2 \ } + V_{i,j}   \right)\Delta t
+\psi_{i,j}(t+\Delta t) = \psi_{i,j}(t) + i\left(\frac{\ \psi_{i+1,j}(t) + \psi_{i,j+1}(t) + \psi_{i-1,j}(t) + \psi_{i,j-1}(t) - 4\psi_{i,j}(t) \ }{\ \Delta x^2 \ } - V_{i,j}   \right)\Delta t
 ```
 が成り立つ。
 
